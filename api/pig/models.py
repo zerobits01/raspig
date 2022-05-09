@@ -5,4 +5,6 @@ from django.contrib.auth.models import User
 class Pig(models.Model):
 
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
-    uuid  = models.CharField(max_length=255, unique=True, null=False, blank=False)    
+    uuid  = models.CharField(max_length=255, unique=True, null=False, blank=False)
+    weight_count = models.IntegerField(default=0, null=False, blank=False)
+    get_new_task_count = models.IntegerField(default=0, null=False, blank=False)
