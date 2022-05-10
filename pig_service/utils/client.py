@@ -2,15 +2,18 @@ import requests
 from configs import server_addr, server_port
 from configs import pig_uuid
 
+
 get_task_url = "/api/pig/pig/?uuid={pig_uuid}"
 get_weight_url = "/api/pig/weight/?uuid={pig_uuid}"
 task_update_url = "/api/pig/task-update/{id}/"
+
 
 def get_new_tasks():
     resp = requests.get(
         f'{server_addr}:{server_port}{get_task_url.format(pig_uuid=pig_uuid)}'
     )
     return resp.json()
+
 
 def get_weight():
     resp = requests.get(

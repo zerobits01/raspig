@@ -1,6 +1,7 @@
 import configparser
 import uuid
 
+language = 'en'
 
 server_addr = "http://127.0.0.1"
 server_port = 8000
