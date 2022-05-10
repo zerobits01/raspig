@@ -10,7 +10,8 @@ if __name__ == "__main__":
             resp = get_new_tasks()
             print(resp)
             for item in resp:
-                tasks_queue.append(item)
+                if item not in tasks_queue:
+                    tasks_queue.append(item)
             resp = get_weight()
             print(resp)
             while True:
