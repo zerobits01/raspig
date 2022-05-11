@@ -1,10 +1,10 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from todoapi.views import ToDoAPI
+from todoapi.views import GoalAPI
 
-todo_router = DefaultRouter()
-todo_router.register(r'tasks', ToDoAPI, basename="todo")
+goal_router = DefaultRouter()
+goal_router.register(r'tasks', GoalAPI, basename="goal")
 
 urlpatterns = [
-    path('', include(todo_router.urls)),
+    path('', include(goal_router.urls)),
 ]

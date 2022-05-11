@@ -1,15 +1,15 @@
 from rest_framework.viewsets import ModelViewSet
-from todoapi.models import ToDo
-from todoapi.serializers import ToDoSerializer
+from todoapi.models import Goal
+from todoapi.serializers import GoalSerializer
 from rest_framework import permissions
 
 
 
 
-class ToDoAPI(ModelViewSet):
+class GoalAPI(ModelViewSet):
     
-    queryset = ToDo.objects.all()
-    serializer_class = ToDoSerializer
+    queryset = Goal.objects.all()
+    serializer_class = GoalSerializer
     http_method_names = ['post', 'get', 'delete', 'put']
     permission_classes = [permissions.IsAuthenticated, ]
     
