@@ -1,0 +1,12 @@
+[Unit]
+Description=Pig Service
+After=network.target
+
+[Service]
+User=pi
+WorkingDirectory=/opt/mypig
+ExecStart=python3 pig.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
