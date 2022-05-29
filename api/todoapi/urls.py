@@ -4,7 +4,7 @@ from todoapi.views import GoalAPI, DoneGoalAPI
 
 goal_router = DefaultRouter()
 goal_router.register(r'goals', GoalAPI, basename="goal")
-goal_router.register(r'done-goals', DoneGoalAPI, basename="done-goal")
+# goal_router.register(r'done-goals', DoneGoalAPI, basename="done-goal")
 
 urlpatterns = [
     path('', include(goal_router.urls)),

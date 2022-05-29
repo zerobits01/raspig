@@ -17,7 +17,8 @@ class GoalAPI(ModelViewSet):
     # it doesnt have authorization on create and patch
 
     def list(self, request):
-        data = list(self.queryset.filter(done=False, owner=request.user).values())
+        # print(request.user)
+        data = self.queryset.filter(owner=request.user).values()
         print(20*"#", data)
         return Response(data)
 

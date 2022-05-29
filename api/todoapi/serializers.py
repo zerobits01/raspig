@@ -9,10 +9,15 @@ class GoalSerializer(serializers.ModelSerializer):
         exclude = ["owner"]
 
     def create(self, validated_data):
-        for k, v in validated_data['tasks']:
+        print(validated_data)
+        for k, v in validated_data['tasks'].items():
             if type(k) is not str and type(v) is not bool:
                 raise ValueError('tasks should be in format {task-name: boolean-done}') 
+        request = self.context.get('request', None)
+        if request:
+            owner = request.user
+            validated_data['owner'] = owner
         return super().create(validated_data)
 
-    def update(self, instance, validated_data):
-        return super().update(instance, validated_data)
+    # def update(self, instance, validated_data):
+    #     return super().update(instance, validated_data)
