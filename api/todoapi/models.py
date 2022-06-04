@@ -10,3 +10,6 @@ class Goal(models.Model):
     point = models.IntegerField(default=1, null=False, blank=False)
     done = models.BooleanField(default=False, null=False, blank=False)
 
+class GetNewGoal(models.Model):
+    owner  = models.ForeignKey(User, on_delete=models.CASCADE)
+    getnew = models.BooleanField(default=False, null=False, blank=False)

@@ -3,25 +3,26 @@ import RPi.GPIO as GPIO # Import Raspberry Pi GPIO library
 from global_vars import tasks_queue
 from configs import language
 from time import sleep
-from utils.client import get_new_tasks, get_point, update_task_to_done
+from utils.client import get_new_tasks, get_point, update_task_to_done, get_new
 import threading
-# from gtts import gTTS
-# from playsound import playsound
+from gtts import gTTS
+from playsound import playsound
 
 pig_initialized = False
 
-B1 = 33
-B2 = 35
-B3 = 37
+B1 = 31
+B2 = 33
+B3 = 35
+B4 = 37
 L1 = 32
 L2 = 36
 L3 = 38
 L4 = 40
 
 def text_to_speech(txt):
-    # myobj = gTTS(text=txt, lang=language, slow=False)
-    # myobj.save("txt.mp3")
-    # playsound("txt.mp3")
+    myobj = gTTS(text=txt, lang=language, slow=False)
+    myobj.save("txt.mp3")
+    playsound("txt.mp3")
     print(f'from text to speech: {txt}')
 
 
@@ -108,6 +109,19 @@ def get_point_callback(channel):
         text_to_speech('pig is not initialzed, please check the id with the first button')
 
 
+def set_newtask_callback(channel):
+    if pig_initialized:
+        print("set new task")
+        resp = get_new()
+        print(resp) 
+        text_to_speech(resp['msg'])
+        # turn_on_leds()
+        threading.Thread(target=turn_on_leds, args=()).start()
+        
+    else:
+        text_to_speech('pig is not initialzed, please check the id with the first button')
+
+
 def task_done_callback(channel):
     print("task_done")
     all_on = False
@@ -134,12 +148,14 @@ def add_button_cbs():
     GPIO.add_event_detect(B1,GPIO.RISING,callback=get_new_task_callback, bouncetime=750)
     GPIO.add_event_detect(B2,GPIO.RISING,callback=get_point_callback, bouncetime=750)
     GPIO.add_event_detect(B3,GPIO.RISING,callback=task_done_callback, bouncetime=750)
+    GPIO.add_event_detect(B4,GPIO.RISING,callback=set_newtask_callback, bouncetime=750)
 
 
 def setup_pins():
     GPIO.setup(B1, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) 
     GPIO.setup(B2, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(B3, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(B4, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
     GPIO.setup(L1, GPIO.OUT, initial=GPIO.LOW) 
     GPIO.setup(L2, GPIO.OUT, initial=GPIO.LOW)
     GPIO.setup(L3, GPIO.OUT, initial=GPIO.LOW)

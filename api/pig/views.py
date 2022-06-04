@@ -2,6 +2,7 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework import status
 from pig.serializers import PigSerializer
 from pig.models import Pig
+from todoapi.models import GetNewGoal
 from rest_framework.response import Response
 from todoapi.models import Goal
 
@@ -96,3 +97,23 @@ class PigTaskUpdate(GenericViewSet):
             'msg': 'task updated successfully! good luck.'
         })
 
+
+class GetNew(ModelViewSet):
+    
+    queryset = GetNewGoal.objects.all()
+    http_method_names = ['post']
+
+
+    def create(self, request):
+        uuid = request.query_params.get('uuid', None)
+        pig  = self.queryset.filter(uuid=uuid)[0]
+        user = pig.owner
+        data = self.queryset.filter(owner=user).values()
+        if len(data) == 0:
+            self.queryset.create(
+                owner = user,
+                getnew= True
+            )
+        return Response({
+            "msg": "request for getting new task sent, please wait"
+        })

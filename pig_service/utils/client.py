@@ -4,6 +4,7 @@ from configs import pig_uuid
 
 
 get_task_url = "/api/pig/pig/?uuid={pig_uuid}"
+get_new_url = "/api/pig/getnew/?uuid={pig_uuid}"
 get_point_url = "/api/pig/point/?uuid={pig_uuid}"
 task_update_url = "/api/pig/task-update/{id}/"
 
@@ -18,6 +19,13 @@ def get_new_tasks():
 def get_point():
     resp = requests.get(
         f'{server_addr}:{server_port}{get_point_url.format(pig_uuid=pig_uuid)}'
+    )
+    return resp.json()
+
+
+def get_new():
+    resp = requests.get(
+        f'{server_addr}:{server_port}{get_new_url.format(pig_uuid=pig_uuid)}'
     )
     return resp.json()
 
